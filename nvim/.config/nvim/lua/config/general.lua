@@ -6,9 +6,9 @@ vim.opt.smarttab = true
 vim.g.mapleader = ' '
 
 -- Folding
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevel = 2
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldlevel = 2
 
 vim.o.tabstop = 4
 vim.o.shiftwidth = 0

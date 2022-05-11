@@ -5,7 +5,6 @@ local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.n
 local compile_path = install_path .. "/plugin/packer_compiled.lua"
 local is_installed = vim.fn.empty(vim.fn.glob(install_path)) == 0
 
-
 local function init()
     if not is_installed then
         if vim.fn.input("Install packer.nvim? (y for yes) ") == "y" then
@@ -20,8 +19,7 @@ local function init()
     if packer == nil then
         packer = require('packer')
         packer.init({
-            -- we don't want the compilation file in '~/.config/nvim'
-	    disable_commands = true,
+            disable_commands = true,
             compile_path = compile_path,
         })
     end
@@ -103,22 +101,20 @@ local function init()
         end
     }
 
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-cmdline',
 
-            'hrsh7th/cmp-vsnip',
-            'hrsh7th/vim-vsnip',
-        },
-        config = function()
-            require('config.plugins.cmp').setup()
-            require('config.plugins.lsp').setup()
-        end
-    }
+    use {'hrsh7th/nvim-cmp', event = 'InsertEnter', config = function()
+        require('config.plugins.cmp').setup()
+    end}
+    use {'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp'}
+    use {'hrsh7th/cmp-nvim-lsp', after = 'cmp-nvim-lua'}
+    use {'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp'}
+    use {'hrsh7th/cmp-path', after = 'cmp-buffer'}
+    use {'hrsh7th/cmp-calc', after = 'cmp-path'}
+    use {'David-Kunz/cmp-npm', after = 'cmp-calc', requires = 'nvim-lua/plenary.nvim', config = function()
+        require('config.plugins.cmp-npm').setup()
+    end}
+
+    use {'williamboman/nvim-lsp-installer', event = 'BufEnter', after = 'cmp-nvim-lsp', config = "require('config.lsp')"}
 
     use 'tpope/vim-fugitive'
 

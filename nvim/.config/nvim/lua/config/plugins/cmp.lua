@@ -24,8 +24,10 @@ function M.setup()
 		sources = cmp.config.sources({
 			{ name = 'nvim_lsp' },
 			{ name = 'vsnip' }, -- For vsnip users.
-		}, {
 			{ name = 'buffer' },
+            { name = 'calc' },
+            { name = 'path' },
+            { name = 'npm', keyword_length = 4 },
 		})
 	})
 
