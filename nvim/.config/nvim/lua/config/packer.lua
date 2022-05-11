@@ -33,6 +33,8 @@ return require('packer').startup(function()
             }
         end
     }
+
+    use 'elkowar/yuck.vim'
     
 	-- Use the Github Neovim Theme
 	use {
