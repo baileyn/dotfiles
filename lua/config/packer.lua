@@ -42,4 +42,16 @@ return require('packer').startup(function()
 	}
 
 	use 'tpope/vim-fugitive'
+
+	-- Add components to show LSP Status in Status Line
+	use 'nvim-lua/lsp-status.nvim'
+
+	-- Status Line for Neovim
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+		config = function()
+			require('config.plugins.statusline').setup()
+		end
+	}
 end)
