@@ -3,6 +3,8 @@ local M = {}
 
 function M.setup()
     nest.applyKeymaps {
+        -- Let ESC go to insert mode in Terminal
+        { '<Esc>', '<C-\\><C-n>', mode = 't' },
         -- Prefix  every nested keymap with <leader>
         { '<leader>', {
             -- Prefix every nested keymap with f (meaning actually <leader>f here)
