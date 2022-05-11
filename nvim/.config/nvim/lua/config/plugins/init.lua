@@ -155,6 +155,8 @@ local function init()
             require('Comment').setup()
         end
     }
+
+    use {'rcarriga/nvim-notify'}
 end
 
 local plugins = setmetatable({}, {
