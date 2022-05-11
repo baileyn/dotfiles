@@ -123,10 +123,13 @@ local function init()
 
     -- Add components to show LSP Status in Status Line
     use 'nvim-lua/lsp-status.nvim'
+    use {'jose-elias-alvarez/nvim-lsp-ts-utils', after = {'nvim-treesitter'}}
 
     use {'williamboman/nvim-lsp-installer', event = 'BufEnter', after = 'cmp-nvim-lsp', config = "require('config.lsp')"}
 
-    use 'tpope/vim-fugitive'
+    -- tpope is our savior.
+    use {'tpope/vim-fugitive'}
+    use {'tpope/vim-speeddating'}
 
     -- Status Line for Neovim
     use {
