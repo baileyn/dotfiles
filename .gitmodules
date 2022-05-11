@@ -4,3 +4,6 @@
 [submodule "work"]
 	path = work
 	url = git@github.com:baileyn/work.git
+[submodule "nvim/.config/nvim"]
+	path = nvim/.config/nvim
+	url = https://github.com/baileyn/nvim.git
