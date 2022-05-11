@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for d in */ ; do
+    name=$(basename "${d}")
+    stow "${name}"
+done
