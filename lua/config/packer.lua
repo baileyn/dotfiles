@@ -40,4 +40,6 @@ return require('packer').startup(function()
 			require('config.plugins.lsp').setup()
 		end
 	}
+
+	use 'tpope/vim-fugitive'
 end)
