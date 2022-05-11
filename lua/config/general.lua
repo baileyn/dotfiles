@@ -3,6 +3,7 @@ vim.opt.termguicolors = true
 vim.opt.autoindent = true
 vim.opt.expandtab = true
 vim.opt.smarttab = true
+vim.g.mapleader = ' '
 
 -- Folding
 vim.opt.foldmethod = 'expr'

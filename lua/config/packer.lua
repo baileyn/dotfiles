@@ -1,6 +1,6 @@
 return require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
-    
+	use 'neovim/nvim-lspconfig'
     use {
         'nvim-telescope/telescope.nvim',
         requires = {'nvim-lua/plenary.nvim'}
@@ -33,7 +33,7 @@ return require('packer').startup(function()
             }
         end
     }
-
+    
 	-- Use the Github Neovim Theme
 	use {
 		'projekt0n/github-nvim-theme',
@@ -55,7 +55,13 @@ return require('packer').startup(function()
 		end
 	}
 
-	use 'neovim/nvim-lspconfig'
+    -- Allows for nicely-defined keymappings.
+    use {
+        'LionC/nest.nvim',
+        config = function()
+            require('config.plugins.keymaps').setup()
+        end
+    }
 
 	use {
 		'hrsh7th/nvim-cmp',
