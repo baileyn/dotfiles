@@ -16,6 +16,9 @@ if SYSTEM == 'Windows':
 else:
     raise Exception(f'Unsupported Operating System: {SYSTEM}')
 
+def go_install(path: str, version: str):
+    subprocess.run(['go', 'install', f'{path}@{version}'], shell=True)
+
 def get_latest_github_release(repo: str, name: str):
     url = f'https://api.github.com/repos/{repo}/releases/latest'
     req = urllib.request.Request(url)
@@ -65,6 +68,8 @@ if __name__ == '__main__':
     else:
         print('Error')
         sys.exit(1)
+
+    go_install('golang.org/x/tools/gopls', 'latest')
 
     # Download latest rust-analyzer
     # TODO: Handle different architectures.
