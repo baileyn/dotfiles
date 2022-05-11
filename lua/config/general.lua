@@ -4,6 +4,11 @@ vim.opt.autoindent = true
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 
+-- Folding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 2
+
 vim.o.tabstop = 4
 vim.o.shiftwidth = 0
 
