@@ -34,6 +34,12 @@ local function init()
         'nvim-telescope/telescope.nvim',
         requires = {'nvim-lua/plenary.nvim'}
     }
+
+    use {
+        'cljoly/telescope-repo.nvim',
+        requires = {'nvim-telescope/telescope.nvim'},
+    }
+
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
@@ -113,13 +119,14 @@ local function init()
     use {'David-Kunz/cmp-npm', after = 'cmp-calc', requires = 'nvim-lua/plenary.nvim', config = function()
         require('config.plugins.cmp-npm').setup()
     end}
+    use {'onsails/lspkind-nvim'}
+
+    -- Add components to show LSP Status in Status Line
+    use 'nvim-lua/lsp-status.nvim'
 
     use {'williamboman/nvim-lsp-installer', event = 'BufEnter', after = 'cmp-nvim-lsp', config = "require('config.lsp')"}
 
     use 'tpope/vim-fugitive'
-
-    -- Add components to show LSP Status in Status Line
-    use 'nvim-lua/lsp-status.nvim'
 
     -- Status Line for Neovim
     use {

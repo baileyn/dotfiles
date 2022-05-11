@@ -1,11 +1,5 @@
-local M = {}
-
-local nvim_lsp = require('lspconfig')
+local lsp_installer = require("nvim-lsp-installer")
 local lsp_status = require('lsp-status')
-local capabilities = require('config.plugins.cmp').get_capabilities()
-
-lsp_status.register_progress()
-capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
 
 local on_attach = function(client, bufnr)
     require'nest'.applyKeymaps {
@@ -30,17 +24,17 @@ local on_attach = function(client, bufnr)
     lsp_status.on_attach(client, bufnr)
 end
 
-function M.setup()
-	local servers = {'rust_analyzer', 'pyright', 'gopls'}
-	for _, lsp in ipairs(servers) do
-		nvim_lsp[lsp].setup {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			flags = {
-				debounce_text_changes = 150,
-			}
-		}
-	end
-end
+lsp_installer.on_server_ready(function(server)
+    local cmp_nvim_lsp = require('cmp_nvim_lsp')
+    local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-return M
+    local opts = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
+
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
+
