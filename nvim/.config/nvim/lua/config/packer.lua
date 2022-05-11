@@ -109,4 +109,11 @@ return require('packer').startup(function()
             require('gitsigns').setup()
         end
     }
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 end)
