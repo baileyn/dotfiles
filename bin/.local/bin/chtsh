@@ -1,0 +1,6 @@
+#!/bin/bash
+
+read -p "> " query
+query=$(echo $query | tr ' ' '+')
+
+curl -s https://cheat.sh/${query} && while [ : ]; do sleep 1; done

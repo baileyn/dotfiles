@@ -1,0 +1,58 @@
+#!/bin/bash
+
+PROJECTS_ROOT="${HOME}/projects"
+
+function fuzzy_find_project {
+    projects=$(find -L ${PROJECTS_ROOT} -maxdepth 4 -type d -exec test -e '{}/.git' ';' -print -prune -or -type d -name "*.git" -print -prune -or -name "node_modules" -prune)
+    projects=$(printf "%s\n%s\n" $projects "$HOME/.config/nvim")
+    if [[ -z $2 ]]; then
+        # find $1/ -mindepth 2 -maxdepth 2 -type d | fzf
+        echo "$projects" | fzf
+    else
+        # find $1/ -mindepth 2 -maxdepth 2 -type d | fzf -q $2
+        echo "$projects" | fzf -q $2
+    fi
+}
+
+function in_tmux_session {
+    [[ -n "$TMUX" ]]
+}
+
+function session_exists {
+    tmux has-session -t $1 &>/dev/null
+}
+
+function switch_to_session {
+    if in_tmux_session; then
+        tmux switch-client -t $1
+    else
+        tmux attach -t $1
+    fi
+}
+
+function create_session {
+    if in_tmux_session; then
+        tmux new-session -d -s $1 -c $2
+        tmux switch-client -t $1
+    else
+        tmux new-session -s $1 -c $2
+    fi
+}
+
+project_path=$(fuzzy_find_project "${PROJECTS_ROOT}" $1)
+name=${project_path#*$PROJECTS_ROOT/}
+name=$(echo $name | tr '.' '_')
+
+if session_exists $name; then
+    switch_to_session $name
+else
+    if [[ "${project_path}" == *".git" ]]; then
+        pushd "${project_path}" &>/dev/null
+        git worktree add main
+        popd &>/dev/null
+
+        project_path="${project_path}/main"
+    fi
+
+    create_session $name $project_path
+fi
