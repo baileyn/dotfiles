@@ -1,0 +1,6 @@
+[submodule "personal"]
+	path = personal
+	url = git@github.com:baileyn/personal.git
+[submodule "work"]
+	path = work
+	url = git@github.com:baileyn/work.git
