@@ -1,11 +1,17 @@
+(deflisten volume_percent
+  `pulsemixer --get-volume | awk '{print $1}'`)
+
 (defwidget volume []
-  (box :class "volume"
-       :spacing "4"
-    (button :class "volume-button"
-            :orientation "h"
-      (image :path "images/volume_low.png"
-             :image-width 25
-             :image-height 25))))
+  (eventbox :onhover "eww open audio_ctl"
+            :onhoverlost "eww close audio_ctl"
+    (box :class "volume"
+         :spacing "4"
+      (button :class "volume-button"
+              :orientation "h"
+              :tooltip "${volume_percent}%"
+        (image :path "images/volume_low.png"
+               :image-width 25
+               :image-height 25)))))
 
 (defwidget left [] 
   (box :class "left"
@@ -44,3 +50,12 @@
            :wm-ignore false
   (bar_widget))
 
+(defwidget audio []
+  "Audio Widget")
+(defwindow audio_ctl
+	:geometry (geometry :x "-20px" 
+						:y "7%" 
+                        :anchor "top right"
+						:width "280px" 
+						:height "60px")
+  (audio))
