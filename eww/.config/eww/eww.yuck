@@ -7,6 +7,7 @@
     (box :class "volume"
          :spacing "4"
       (button :class "volume-button"
+              :onclick "pulsemixer --toggle-mute"
               :orientation "h"
               :tooltip "${volume_percent}%"
         (image :path "images/volume_low.png"
