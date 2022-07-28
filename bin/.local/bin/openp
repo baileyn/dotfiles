@@ -1,10 +1,23 @@
 #!/bin/bash
 
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
 PROJECTS_ROOT="${HOME}/projects"
+NVIM_ROOT="${CONFIG}/nvim"
+EWW_ROOT="${CONFIG}/eww"
+BSPWM_ROOT="${CONFIG}/bspwm"
+SXHKD_ROOT="${CONFIG}/sxhkd"
+
+EXTRA_DIRS="${NVIM_ROOT} ${EWW_ROOT} ${BSPWM_ROOT} ${SXHKD_ROOT}"
 
 function fuzzy_find_project {
     projects=$(find -L ${PROJECTS_ROOT} -maxdepth 4 -type d -exec test -e '{}/.git' ';' -print -prune -or -type d -name "*.git" -print -prune -or -name "node_modules" -prune)
-    projects=$(printf "%s\n%s\n" $projects "$HOME/.config/nvim")
+
+    for p in ${EXTRA_DIRS}; do
+        if [[ -d ${p} ]]; then
+            projects=$(printf "%s\n%s\n" $projects $p)
+        fi
+    done
+
     if [[ -z $2 ]]; then
         # find $1/ -mindepth 2 -maxdepth 2 -type d | fzf
         echo "$projects" | fzf
