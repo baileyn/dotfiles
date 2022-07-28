@@ -33,7 +33,7 @@ def parse(line):
             "type": typ,
             "id": id_name,
             "name": name,
-            "mute": mute != "0",
+            "muted": mute != "0",
             "volumes": volumes,
             "default": 'Default' in line,
         }
@@ -52,7 +52,17 @@ def get_information():
     return info
 
 
-def get_icon() -> str:
+def get_icon(device) -> str:
+    if device['muted']:
+        return 'images/volume_mute.png'
+
+    volume = device['volumes'][0]
+
+    if volume == 0:
+        return 'images/volume_off.png'
+    if volume < 50:
+        return 'images/volume_low.png'
+
     return 'images/volume_high.png'
 
 
@@ -60,7 +70,6 @@ if __name__ == '__main__':
     info = get_information()
 
     data = {}
-    data['icon'] = get_icon()
     data['info'] = get_information()
     data['defaults'] = {}
 
@@ -68,5 +77,7 @@ if __name__ == '__main__':
         if item['default']:
             typ = item['type'].lower()
             data['defaults'][typ] = item
+
+    data['icon'] = get_icon(data['defaults']['sink'])
 
     print(json.dumps(data), end="")

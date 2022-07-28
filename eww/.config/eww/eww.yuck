@@ -1,5 +1,5 @@
-(deflisten volume_percent
-  `pulsemixer --get-volume | awk '{print $1}'`)
+(defpoll volume :interval '1s'
+  `scripts/audio`)
 
 (defwidget volume []
   (eventbox :onhover "eww open audio_ctl"
@@ -9,8 +9,8 @@
       (button :class "volume-button"
               :onclick "pulsemixer --toggle-mute"
               :orientation "h"
-              :tooltip "${volume_percent}%"
-        (image :path "images/volume_low.png"
+              :tooltip "${volume.defaults.sink.volumes[0]}%"
+        (image :path "${volume.icon}"
                :image-width 25
                :image-height 25)))))
 
@@ -53,6 +53,7 @@
 
 (defwidget audio []
   "Audio Widget")
+
 (defwindow audio_ctl
 	:geometry (geometry :x "-20px" 
 						:y "7%" 
