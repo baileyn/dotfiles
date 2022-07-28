@@ -76,13 +76,27 @@
     (center)
     (right)))
 
-(defwindow status_bar
+(defwindow status_bar_left
            :monitor 0
            :geometry (geometry :x "0%"
                                :y "5px"
                                :width "98%"
                                :height "40px"
                                :anchor "top center")
+           :reserve (struts :distance "40px" :side "top")
+           :stacking "fg"
+           :windowtype "dock"
+           :wm-ignore false
+  (bar_widget))
+
+(defwindow status_bar_right
+           :monitor 1
+           :geometry (geometry :x "0%"
+                               :y "5px"
+                               :width "98%"
+                               :height "40px"
+                               :anchor "top center")
+           :reserve (struts :distance "40px" :side "top")
            :stacking "fg"
            :windowtype "dock"
            :wm-ignore false
@@ -90,7 +104,7 @@
 
 (defwidget audio []
   (box :orientation "v"
-    (for entry in {volume.sources}
+    (for entry in {volume.sinks}
       (button :class {entry.default ? "default-source" : "source"}
               :onclick "notify-send 'click' '${entry}'"
               :halign "start"
