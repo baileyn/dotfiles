@@ -22,6 +22,7 @@ $white: $foreground;
 }
 
 .status-bar {
+    color: $foreground;
     background: $background;
     border-radius: 10px;
     padding: 0.3rem;
@@ -36,6 +37,9 @@ $white: $foreground;
 }
 
 .status-bar .volume {
+    font-size: 30px;
+    margin-top: -5px;
+    margin-bottom: -10px;
 }
 
 .time {

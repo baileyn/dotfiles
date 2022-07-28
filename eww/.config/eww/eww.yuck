@@ -14,9 +14,7 @@
               :onclick "pulsemixer --toggle-mute"
               :orientation "h"
               :tooltip "${volume.defaults.sink.volumes[0]}%"
-        (image :path "${volume.icon}"
-               :image-width 25
-               :image-height 25)))))
+        {volume.icon}))))
 
 (defpoll volume :interval '1s'
   `scripts/audio`)
@@ -34,14 +32,15 @@
 (defpoll min	:interval "1s"	"date '+%M'")
 
 ;; Calendar Widget
-(defwidget cal []
+(defwidget calendar_widget []
 	(box :class "cal-box" 
 		 :orientation "v"
 	(box :class "cal-inner-box"
 	(calendar :class "cal" 
 			  :day calendar_day 
 			  :month calendar_month 
-			  :year calendar_year))))
+			  :year calendar_year
+              :onclick "scripts/calendar {0} {1} {2}"))))
 
 (defpoll calendar_day :interval "10h"
     "date '+%d'")
@@ -111,4 +110,4 @@
                         :anchor "top right"
 						:width "270px" 
 						:height "60px")
-(cal))
+(calendar_widget))
