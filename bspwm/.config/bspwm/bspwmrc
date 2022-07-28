@@ -3,7 +3,8 @@
 picom -f&
 dunst&
 feh --bg-scale $HOME/wallpapers/levi.png --bg-scale $HOME/wallpapers/demonslayer.jpg
-# $HOME/.config/eww/bar/launch_bar
+eww open status_bar_left
+eww open status_bar_right
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
