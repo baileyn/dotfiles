@@ -1,1 +1,72 @@
-#!/bin/zsh
+#!/usr/bin/env python
+
+import json
+import subprocess
+
+
+def parse(line):
+    try:
+        idx_start = line.index(':')
+        typ = line[:idx_start]
+
+        idx_start = line.index(':', idx_start+1)
+        idx_end = line.index(',', idx_start+1)
+        id_name = line[idx_start+1:idx_end].strip()
+
+        idx_start = line.index(':', idx_start+1)
+        idx_end = line.index(',', idx_start+1)
+        name = line[idx_start+1:idx_end].strip()
+
+        idx_start = line.index(':', idx_start+1)
+        idx_end = line.index(',', idx_start+1)
+        mute = line[idx_start+1:idx_end].strip()
+
+        idx_start = line.index(':', idx_start+1)
+        idx_end = line.index(',', idx_start+1)
+
+        idx_start = line.index('Volumes:') + 8
+        idx_end = line.index(']', idx_start+1)
+        volumes = eval(line[idx_start+1:idx_end+1].strip())
+        volumes = [int(e[:-1]) for e in volumes]
+
+        return {
+            "type": typ,
+            "id": id_name,
+            "name": name,
+            "mute": mute != "0",
+            "volumes": volumes,
+            "default": 'Default' in line,
+        }
+    except ValueError:
+        return None
+
+
+def get_information():
+    res = subprocess.run(['pulsemixer', '-l'], stdout=subprocess.PIPE)
+
+    info = []
+
+    for line in res.stdout.decode('utf-8').splitlines():
+        info.append(parse(line))
+
+    return info
+
+
+def get_icon() -> str:
+    return 'images/volume_high.png'
+
+
+if __name__ == '__main__':
+    info = get_information()
+
+    data = {}
+    data['icon'] = get_icon()
+    data['info'] = get_information()
+    data['defaults'] = {}
+
+    for item in data['info']:
+        if item['default']:
+            typ = item['type'].lower()
+            data['defaults'][typ] = item
+
+    print(json.dumps(data), end="")
