@@ -52,7 +52,11 @@
   (bar_widget))
 
 (defwidget audio []
-  "Audio Widget")
+  (box :orientation "v"
+    (for entry in "${volume.sources}"
+      (button :onclick "notify-send 'click' '${entry}'"
+              :halign "start"
+        "${entry.name}"))))
 
 (defwindow audio_ctl
 	:geometry (geometry :x "-20px" 
