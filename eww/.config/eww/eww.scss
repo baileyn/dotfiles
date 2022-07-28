@@ -1,0 +1,20 @@
+* {
+    all: unset;
+}
+
+.status-bar {
+    background: #333333;
+    border-radius: 10px;
+}
+
+.status-bar > .left {
+    padding-left: 10px;
+}
+
+.status-bar > .right {
+    padding-right: 10px;
+}
+
+.status-bar .volume {
+    font-size: 2em;
+}

@@ -1,0 +1,46 @@
+(defwidget volume []
+  (box :class "volume"
+       :spacing "4"
+    (button :class "volume-button"
+            :orientation "h"
+      (image :path "images/volume_low.png"
+             :image-width 25
+             :image-height 25))))
+
+(defwidget left [] 
+  (box :class "left"
+       :halign "start"
+       :orientation "h"
+    "Left"))
+
+(defwidget center [] 
+  (box :class "center"
+       :halign "center"
+       :orientation "h"
+    "Center"))
+
+(defwidget right [] 
+  (box :class "right"
+       :halign "end"
+       :orientation "h"
+    (volume)))
+
+(defwidget bar_widget []
+  (box :class "status-bar"
+       :orientation "h"
+    (left)
+    (center)
+    (right)))
+
+(defwindow status_bar
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "5px"
+                               :width "98%"
+                               :height "40px"
+                               :anchor "top center")
+           :stacking "fg"
+           :windowtype "dock"
+           :wm-ignore false
+  (bar_widget))
+
