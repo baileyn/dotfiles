@@ -70,13 +70,20 @@ if __name__ == '__main__':
     info = get_information()
 
     data = {}
-    data['info'] = get_information()
+    info = get_information()
     data['defaults'] = {}
+    data['sinks'] = []
+    data['sources'] = []
 
-    for item in data['info']:
+    for item in info:
         if item['default']:
             typ = item['type'].lower()
             data['defaults'][typ] = item
+
+        if item['type'] == 'Sink':
+            data['sinks'].append(item)
+        elif item['type'] == 'Source':
+            data['sources'].append(item)
 
     data['icon'] = get_icon(data['defaults']['sink'])
 
