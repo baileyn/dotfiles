@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import json
+import subprocess
+import sys
+
+LEFT_NAMES = ['1', '2', '3', '4', '5']
+RIGHT_NAMES = ['6', '7', '8', '9', '0']
+
+
+def workspaces():
+    data = subprocess.run(
+        ['bspc', 'query', '-D', '--names'], stdout=subprocess.PIPE)
+
+    return data.stdout.decode('utf-8').splitlines()
+
+
+def occupied():
+    data = subprocess.run(
+        ['bspc', 'query', '-D', '-d', '.occupied', '--names'],
+        stdout=subprocess.PIPE)
+
+    return data.stdout.decode('utf-8').splitlines()
+
+
+def focused():
+    data = subprocess.run(
+        ['bspc', 'query', '-D', '-d', '.focused', '--names'],
+        stdout=subprocess.PIPE)
+
+    return data.stdout.decode('utf-8').splitlines()
+
+
+def print_workspace_data():
+    data = {
+        "left_names": LEFT_NAMES,
+        "right_names": RIGHT_NAMES,
+    }
+
+    for i in workspaces():
+        data[i] = {
+            'focused': False,
+            'occupied': False,
+            'icon': ''
+        }
+
+    for i in occupied():
+        data[i]['occupied'] = True
+        data[i]['icon'] = ''
+
+    for i in focused():
+        data[i]['focused'] = True
+        data[i]['icon'] = ''
+
+    data = json.dumps(data)
+    print(data)
+    sys.stdout.flush()
+
+
+if __name__ == '__main__':
+    print_workspace_data()
+
+    p = subprocess.Popen(['bspc', 'subscribe', 'desktop', 'node_transfer'], stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for line in p.stdout:
+        print_workspace_data()

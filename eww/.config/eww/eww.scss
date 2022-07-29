@@ -36,6 +36,20 @@ $white: $foreground;
     padding-right: 10px
 }
 
+.status-bar .workspaces {
+    font-size: 1.8em;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.status-bar .workspaces > .workspace {
+    padding: 0px 2px;
+}
+
+.status-bar .workspaces > .focused {
+    color: $magenta;
+}
+
 .status-bar .volume {
     font-size: 30px;
     margin-top: -5px;

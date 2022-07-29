@@ -49,19 +49,30 @@
 (defpoll calendar_year :interval "10h"
     "date '+%Y'")
 
-(defwidget left [] 
+;; Workspace Widget
+(deflisten workspace :initial "" `scripts/workspaces`)
+
+(defwidget workspaces [side]
+  (box :class "workspaces"
+       :halign "center"
+       :orientation "h"
+    (for name in {workspace["${side}_names"]}
+        (button :class {workspace[name].focused ? "focused" : "workspace"}
+          {workspace[name].icon}))))
+
+(defwidget left_left [] 
   (box :class "left"
        :halign "start"
        :orientation "h"
     "Left"))
 
-(defwidget center [] 
+(defwidget left_center [] 
   (box :class "center"
        :halign "center"
        :orientation "h"
-    "Center"))
+    (workspaces :side 'left')))
 
-(defwidget right [] 
+(defwidget left_right [] 
   (box :class "right"
        :halign "end"
        :orientation "h"
@@ -69,12 +80,12 @@
     (sep)
     (time)))
 
-(defwidget bar_widget []
+(defwidget left_bar_widget []
   (box :class "status-bar"
        :orientation "h"
-    (left)
-    (center)
-    (right)))
+    (left_left)
+    (left_center)
+    (left_right)))
 
 (defwindow status_bar_left
            :monitor 0
@@ -87,7 +98,34 @@
            :stacking "fg"
            :windowtype "dock"
            :wm-ignore false
-  (bar_widget))
+  (left_bar_widget))
+
+(defwidget right_left [] 
+  (box :class "left"
+       :halign "start"
+       :orientation "h"
+    "Left"))
+
+(defwidget right_center [] 
+  (box :class "center"
+       :halign "center"
+       :orientation "h"
+    (workspaces :side 'right')))
+
+(defwidget right_right [] 
+  (box :class "right"
+       :halign "end"
+       :orientation "h"
+    (volume)
+    (sep)
+    (time)))
+
+(defwidget right_bar_widget []
+  (box :class "status-bar"
+       :orientation "h"
+    (right_left)
+    (right_center)
+    (right_right)))
 
 (defwindow status_bar_right
            :monitor 1
@@ -100,7 +138,7 @@
            :stacking "fg"
            :windowtype "dock"
            :wm-ignore false
-  (bar_widget))
+  (right_bar_widget))
 
 (defwidget audio []
   (box :orientation "v"
