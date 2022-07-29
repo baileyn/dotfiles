@@ -2,21 +2,20 @@
     all: unset;
 }
 
+// $background: #B1B6A6;
+// $foreground: #363946;
+// $primary: #000000;
+// $secondary: #819595;
+// $accent: #696773;
+
 $background: #1A1B26;
 $foreground: #A9B1D6;
-
-$black: #24283B;
-$gray: #565F89;
-$red: #F7768E;
-$green: #73DACA;
-$yellow: #E0AF68;
-$blue: #7AA2F7;
-$magenta: #BB9AF7;
-$cyan: #7DCFFF;
-$white: $foreground;
+$primary: #BB9AF7;
+$secondary: #24283B;
+$accent: #7AA2F7;
 
 .separator {
-    color: #444444;
+    color: $secondary;
     font-size: 25px;
     margin: 0px 8px;
 }
@@ -47,7 +46,7 @@ $white: $foreground;
 }
 
 .status-bar .workspaces > .focused {
-    color: $magenta;
+    color: $primary;
 }
 
 .status-bar .volume {
@@ -60,17 +59,19 @@ $white: $foreground;
   font-family: Comic Mono;
   font-weight: bold;
   font-size: 0.8em;
-  background-color: $black;
-  color: $white;
+  background-color: $background;
+  color: $foreground;
+  border: 1px solid $accent;
   border-radius: 5px;
 }
 
 .cal-box {
-  background-color: $black;
+  background-color: $background;
   font-family: Comic Mono;
   font-size: 1em;
   font-weight: bold;
   border-radius: 10px;
+  color: $foreground;
 
   .cal-inner-box {
       padding: 1rem 1rem .2rem;
@@ -87,23 +88,23 @@ $white: $foreground;
 }
 
 calendar:selected {
-  color: $blue;
+  color: $primary;
 }
 
 calendar.header {
-color: $blue;
+color: $foreground;
 font-weight: bold;
 }
 
 calendar.button {
-color: $magenta;
+color: $primary;
 }
 
 calendar.highlight {
-color: $magenta;
+color: $accent;
 font-weight: bold;
 }
 
 calendar:indeterminate {
-color: $background;
+color: $secondary;
 }
